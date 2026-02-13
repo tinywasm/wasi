@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -126,12 +127,10 @@ func (m *mockModule) ExportedFunction(name string) api.Function {
 func TestHostBuilder_Functions(t *testing.T) {
 	// Setup
 	b := bus.New()
-	//receivedTopic := ""
-	receivedPayload := ""
+	var receivedPayload atomic.Value
 
 	b.Subscribe("test", func(msg binary.Message) {
-		//receivedTopic = "test"
-		receivedPayload = string(msg.Payload)
+		receivedPayload.Store(string(msg.Payload))
 	})
 
 	wsBroadcastCalled := false
@@ -178,8 +177,8 @@ func TestHostBuilder_Functions(t *testing.T) {
 	// Verify bus received
 	// Bus might be async.
 	time.Sleep(50 * time.Millisecond)
-	if receivedPayload != "payload" {
-		t.Errorf("Publish failed, got %s", receivedPayload)
+	if receivedPayload.Load() != "payload" {
+		t.Errorf("Publish failed, got %s", receivedPayload.Load())
 	}
 
 	// Test ws_broadcast
@@ -210,11 +209,11 @@ func TestHostBuilder_Subscribe(t *testing.T) {
 	copy(mem.data[0:], "sub-topic")
 
 	// Mock exports
-	onMessageCalled := false
+	var onMessageCalled atomic.Bool
 	mod.exports = make(map[string]api.Function)
 	mod.exports["on_message"] = &mockFunction{
 		callFn: func(ctx context.Context, params ...uint64) ([]uint64, error) {
-			onMessageCalled = true
+			onMessageCalled.Store(true)
 			ptr := uint32(params[0])
 			length := uint32(params[1])
 			// Verify payload
@@ -252,7 +251,7 @@ func TestHostBuilder_Subscribe(t *testing.T) {
 	// Wait for callback
 	time.Sleep(50 * time.Millisecond)
 
-	if !onMessageCalled {
+	if !onMessageCalled.Load() {
 		t.Error("on_message not called")
 	}
 
@@ -260,10 +259,10 @@ func TestHostBuilder_Subscribe(t *testing.T) {
 	realMod.cleanups[0]()
 
 	// Publish again, should not call on_message
-	onMessageCalled = false
+	onMessageCalled.Store(false)
 	b.Publish("sub-topic", binary.Message{Payload: []byte("hello")})
 	time.Sleep(50 * time.Millisecond)
-	if onMessageCalled {
+	if onMessageCalled.Load() {
 		t.Error("on_message called after unsubscribe")
 	}
 }
