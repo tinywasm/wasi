@@ -1,0 +1,14 @@
+github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S9k=
+github.com/fsnotify/fsnotify v1.9.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
+github.com/tetratelabs/wazero v1.11.0 h1:+gKemEuKCTevU4d7ZTzlsvgd1uaToIDtlQlmNbwqYhA=
+github.com/tetratelabs/wazero v1.11.0/go.mod h1:eV28rsN8Q+xwjogd7f4/Pp4xFxO7uOGbLcD/LzB1wiU=
+github.com/tinywasm/binary v0.5.7 h1:1lrmlT4528FRBrkdHyNoBXHvjNi38FpaU4yiP22CcYc=
+github.com/tinywasm/binary v0.5.7/go.mod h1:SNbXbjDwNj/E+eSdQVkGt5BVCbBa/gHqMuEzXvbABBA=
+github.com/tinywasm/bus v0.0.4 h1:wAGdRt/R6ETayTgfkKJLOZeEKHYaxtc9owOYJ3Qb9dw=
+github.com/tinywasm/bus v0.0.4/go.mod h1:PClJl9xsOWR0CtPoYF5Az1sZ+BVppT91wI0X0yKeSaM=
+github.com/tinywasm/fmt v0.17.3 h1:CV8tU9XI0HxOZpXq/JDUBbYPGaJ1zZ2S+WTZXO3QwMc=
+github.com/tinywasm/fmt v0.17.3/go.mod h1:L2GCAi6asgytPV6TVvGrRq5Ml+DkUt1Ijo5i/2J1jOY=
+golang.org/x/sys v0.38.0 h1:3yZWxaJjBmCWXqhN1qh02AkOnCQ1poK6oF+a7xWL6Gc=
+golang.org/x/sys v0.38.0/go.mod h1:OgkHotnGiDImocRcuBABYBEXf8A9a87e/uXjp9XT3ks=
+nhooyr.io/websocket v1.8.17 h1:KEVeLJkUywCKVsnLIDlD/5gtayKp8VoCkksHCGGfT9Y=
+nhooyr.io/websocket v1.8.17/go.mod h1:rN9OFWIUwuxg4fR5tELlYC04bXYowCP9GX47ivo2l+c=
