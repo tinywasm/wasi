@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/coder/websocket"
 	"github.com/tinywasm/bus"
-	"nhooyr.io/websocket"
 )
 
 type wsConn struct {

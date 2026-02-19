@@ -1,0 +1,31 @@
+package wasi
+
+import (
+	"context"
+	"testing"
+
+	"github.com/tinywasm/bus"
+)
+
+func TestWasiIntegration_PubSub(t *testing.T) {
+	// empty module with init export
+	wasm := []byte{
+		0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00,
+		0x01, 0x04, 0x01, 0x60, 0x00, 0x00, 0x03, 0x02,
+		0x01, 0x00, 0x07, 0x08, 0x01, 0x04, 0x69, 0x6e,
+		0x69, 0x74, 0x00, 0x00, 0x0a, 0x04, 0x01, 0x02,
+		0x00, 0x0b,
+	}
+	b := bus.New()
+	hb := NewHostBuilder(b, nil, nil)
+	ctx := context.Background()
+
+	mod, err := Load(ctx, "publisher", wasm, hb)
+	if err != nil {
+		t.Fatalf("Load failed: %v", err)
+	}
+
+	if err := mod.Init(ctx); err != nil {
+		t.Fatalf("Init failed: %v", err)
+	}
+}

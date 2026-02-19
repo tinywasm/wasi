@@ -10,6 +10,7 @@ graph TD
 
     subgraph wasi["tinywasm/wasi"]
         SRV["WasiServer\n──────────\nStartServer · StopServer\nRestartServer · NewFileEvent"]
+        MW["Middleware\n──────────\nRule · Matches · applyPipeline"]
         M["Module\n──────────\nLoad · Drain · Init · Close"]
         HB["HostBuilder\n──────────\nBuild(rt wazero.Runtime)"]
         HUB["wsHub\n──────────\nBroadcast · /ws endpoint"]
@@ -30,6 +31,8 @@ graph TD
     SRV -->|"NewHostBuilder"| HB
     SRV -->|"wsHub.Broadcast"| HUB
     SRV -->|"uses"| B
+    SRV -->|"applyPipeline"| MW
+    MW -->|"invokes"| M
     M   -->|"uses runtime"| WZ
     HB  -->|"registers fns into"| WZ
     HB  -->|"injects"| B
@@ -65,6 +68,14 @@ sequenceDiagram
     BUS->>RT: host: on_message(payload) → subscriber modules
     RT->>HUB: host: ws_broadcast(topic, payload)
     HUB->>BR: WebSocket frame → subscribed clients
+
+    Note over RT,SRV: HTTP Dispatch (/m/{name})
+    BR->>SRV: GET /m/users
+    SRV->>MW: applyPipeline("users")
+    MW->>RT: middleware.handle()
+    SRV->>RT: users.handle()
+    RT->>SRV: Response pointer
+    SRV->>BR: HTTP Response
 ```
 
 ## ServerInterface Boundary
@@ -77,13 +88,10 @@ for `tinywasm/server.ServerHandler`. Selection is done in `main.go` via env var:
 | `wasi` | `tinywasm/wasi.WasiServer` |
 | *(unset / any)* | `tinywasm/server.ServerHandler` |
 
-## Internal Responsibility Map
-
-| Concern | File |
+| Concerns | File |
 |---|---|
-| HTTP server, mux, route registration, lifecycle | `wasi.go` (WasiServer) |
-| Module load / drain / init / close | `module.go` |
+| HTTP server, mux, /m/ dispatch, hot-reload | `wasi.go` |
+| Middleware routing (rule.txt) & pipeline | `middleware.go` |
+| Module load / drain / init / handle | `module.go` |
 | Host function builders (pub, sub, ws_broadcast, log) | `host.go` |
 | WebSocket HTTP endpoint (`/ws?topic=`) | `ws_hub.go` |
-| Hot-swap + drain sequence | `wasi.go` → `swapModule()` |
-| Config (`ModulesDir`, `DrainTimeout`, etc.) | `wasi.go` (Config struct) |

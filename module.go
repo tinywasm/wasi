@@ -17,6 +17,7 @@ type Module struct {
 	active   atomic.Int32
 	drainFn  api.Function // exported drain() uint32
 	initFn   api.Function // exported init()
+	handleFn api.Function // optional: exported handle(req_ptr, req_len uint32) uint32
 	cleanups []func()
 }
 
@@ -61,6 +62,7 @@ func Load(ctx context.Context, name string, wasmBytes []byte, hb *HostBuilder) (
 
 	m.drainFn = mod.ExportedFunction("drain")
 	m.initFn = mod.ExportedFunction("init")
+	m.handleFn = mod.ExportedFunction("handle")
 
 	return m, nil
 }
@@ -110,4 +112,20 @@ func (m *Module) Close(ctx context.Context) error {
 		cleanup()
 	}
 	return m.runtime.Close(ctx)
+}
+
+// Handle calls the module's handle() export. Returns the result ptr (into WASM memory).
+// Returns 0, nil if handleFn is nil.
+func (m *Module) Handle(ctx context.Context, reqPtr, reqLen uint32) (uint32, error) {
+	if m.handleFn == nil {
+		return 0, nil
+	}
+	results, err := m.handleFn.Call(ctx, uint64(reqPtr), uint64(reqLen))
+	if err != nil {
+		return 0, err
+	}
+	if len(results) == 0 {
+		return 0, nil
+	}
+	return uint32(results[0]), nil
 }

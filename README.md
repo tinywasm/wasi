@@ -5,9 +5,15 @@
 
 WASI runtime for tinywasm — module lifecycle management, host functions (pub/sub, WebSocket relay), and hot-reload support via wazero.
 
+## Example
+
+See [example/main.go](example/main.go) for a full multi-module server setup with middleware.
+
 ## Docs
 
+- [WEBSOCKET_CHOICE.md](docs/WEBSOCKET_CHOICE.md) — Why we use `github.com/coder/websocket` for the host runtime
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) — Package dependency graph and runtime message flow diagrams
-- [WASI_SERVER.md](docs/WASI_SERVER.md) — Full standalone server: `WasiServer`, `Config`, `New()`, ServerInterface implementation
+- [WASI_SERVER.md](docs/WASI_SERVER.md) — Full standalone server: `WasiServer`, `Config`, `New()`, Middleware Pipeline, and ServerInterface implementation
 - [HANDOFF_PROTOCOL.md](docs/HANDOFF_PROTOCOL.md) — Hot-swap drain sequence and error cases
+- [ORIGINAL_CONCEPT.md](docs/ORIGINAL_CONCEPT.md) — Original prototype design (renamed from WASI_SUPORT.md)
 - [WASI_STRATEGY.md](docs/WASI_STRATEGY.md) — Original module lifecycle split design (superseded by WASI_SERVER.md)

@@ -76,7 +76,7 @@ func TestWasiServer_SwapModule_Lifecycle(t *testing.T) {
 
 // Unit tests for HostBuilder
 type mockMemory struct {
-	data []byte
+	data       []byte
 	api.Memory // Embed to satisfy interface, will panic if unused methods called
 }
 
@@ -164,7 +164,7 @@ func TestHostBuilder_Functions(t *testing.T) {
 	copy(mem.data[50:], "log-msg")
 
 	mod := &mockModule{
-		mem: mem,
+		mem:     mem,
 		exports: make(map[string]api.Function),
 	}
 
@@ -201,7 +201,7 @@ func TestHostBuilder_Subscribe(t *testing.T) {
 	// Create module
 	mem := &mockMemory{data: make([]byte, 1024)}
 	mod := &mockModule{
-		mem: mem,
+		mem:     mem,
 		exports: make(map[string]api.Function),
 	}
 

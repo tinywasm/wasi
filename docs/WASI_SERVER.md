@@ -63,7 +63,7 @@ func (s *WasiServer) SetBus(b bus.Bus) *WasiServer
 ```go
 // RegisterRoutes appends fn to the internal route list.
 // Called before StartServer; matching the assetmin pattern.
-func (s *WasiServer) RegisterRoutes(fn func(*http.ServeMux)) *WasiServer
+func (s *WasiServer) RegisterRoutes(fn func(*http.ServeMux))
 ```
 
 ### Usage examples
@@ -261,8 +261,32 @@ type serverInterface interface {
     Value() string
     Change(v string) error
     RefreshUI()
+    MainInputFileRelativePath() string
+    RegisterRoutes(fn func(*http.ServeMux))
 }
 ```
+
+---
+
+## Middleware Pipeline
+
+The WASI server supports a middleware pipeline for intercepting requests to modules. Middlewares are WASM modules that reside in `modulesDir` and contain a `rule.txt` file at their root.
+
+### `rule.txt` format
+- `*` or empty: matches all routes.
+- `users,auth`: matches only `users` and `auth` routes.
+- `-auth`: matches all routes EXCEPT `auth`.
+
+### Routing behavior (`/m/{name}`)
+When a request is made to `/m/{name}`:
+1. The server identifies all matching middlewares based on their `rule.txt`.
+2. Middlewares are executed in registration order.
+3. If a middleware's `handle` export returns a non-zero pointer, execution stops and that pointer's content is returned as the response.
+4. If all middlewares return 0, the target module `{name}` is executed.
+5. The response is read from the module's memory as a null-terminated string.
+
+### Request Serialization
+Requests are passed to the `handle(ptr, len)` export as a simple string: `METHOD\nPATH\n`.
 
 ---
 
