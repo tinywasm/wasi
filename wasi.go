@@ -397,11 +397,11 @@ func (s *WasiServer) SupportedExtensions() []string {
 	return []string{".wasm", ".go"}
 }
 
-func (s *WasiServer) Name() string        { return "WASI Server" }
-func (s *WasiServer) Label() string       { return "Server Mode" }
-func (s *WasiServer) Value() string       { return "wasi" }
-func (s *WasiServer) Change(string) error { return nil }
-func (s *WasiServer) RefreshUI()          { s.ui.RefreshUI() }
+func (s *WasiServer) Name() string  { return "WASI Server" }
+func (s *WasiServer) Label() string { return "Server Mode" }
+func (s *WasiServer) Value() string { return "wasi" }
+func (s *WasiServer) Change(string) {}
+func (s *WasiServer) RefreshUI()    { s.ui.RefreshUI() }
 
 // MainInputFileRelativePath returns an empty string as WASI server doesn't use a main Go file for compilation.
 func (s *WasiServer) MainInputFileRelativePath() string { return "" }
