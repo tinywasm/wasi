@@ -13,6 +13,6 @@ require (
 )
 
 require (
-	github.com/tinywasm/fmt v0.24.2 // indirect
+	github.com/tinywasm/fmt v0.24.3 // indirect
 	golang.org/x/sys v0.38.0 // indirect
 )
