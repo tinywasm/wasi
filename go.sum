@@ -8,8 +8,8 @@ github.com/tinywasm/binary v0.5.13 h1:3E3oPzZUABtYz9GJhngkYGWiN8aUSNrRT/g9LRqwt4
 github.com/tinywasm/binary v0.5.13/go.mod h1:qBNVuXs+iUV/wVx900InKo8WpVtv58j1laz1jdh2kS0=
 github.com/tinywasm/bus v0.0.4 h1:wAGdRt/R6ETayTgfkKJLOZeEKHYaxtc9owOYJ3Qb9dw=
 github.com/tinywasm/bus v0.0.4/go.mod h1:PClJl9xsOWR0CtPoYF5Az1sZ+BVppT91wI0X0yKeSaM=
-github.com/tinywasm/fmt v0.24.1 h1:Sr/6NXf+e9f+BQ2iyV1P+cKBGG2noF5AULOMopChvO4=
-github.com/tinywasm/fmt v0.24.1/go.mod h1:L2GCAi6asgytPV6TVvGrRq5Ml+DkUt1Ijo5i/2J1jOY=
+github.com/tinywasm/fmt v0.24.2 h1:HLPgZW9CBkoIBwnkorvG2/3G52CRZ3Eq0Y1XbITV8sI=
+github.com/tinywasm/fmt v0.24.2/go.mod h1:L2GCAi6asgytPV6TVvGrRq5Ml+DkUt1Ijo5i/2J1jOY=
 github.com/tinywasm/gobuild v0.0.25 h1:DJmQS/mvYJW5eMflpTjhGGqkt1TD0yVl37brs2qmeGs=
 github.com/tinywasm/gobuild v0.0.25/go.mod h1:48JVlXnOy8ZBiz/vz5rWMxv4ZrQvB5Fbw22kOx6RfZY=
 golang.org/x/sys v0.38.0 h1:3yZWxaJjBmCWXqhN1qh02AkOnCQ1poK6oF+a7xWL6Gc=
