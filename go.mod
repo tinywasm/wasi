@@ -6,13 +6,13 @@ require (
 	github.com/coder/websocket v1.8.14
 	github.com/fsnotify/fsnotify v1.9.0
 	github.com/tetratelabs/wazero v1.11.0
-	github.com/tinywasm/binary v0.5.14
+	github.com/tinywasm/binary v0.5.15
 	github.com/tinywasm/bus v0.0.4
 	github.com/tinywasm/gobuild v0.0.25
 	nhooyr.io/websocket v1.8.17
 )
 
 require (
-	github.com/tinywasm/fmt v0.24.3 // indirect
+	github.com/tinywasm/fmt v0.24.5-0.20260623154531-ab6aa6c42456 // indirect
 	golang.org/x/sys v0.38.0 // indirect
 )
